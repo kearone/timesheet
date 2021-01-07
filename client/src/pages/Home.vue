@@ -2,26 +2,6 @@
 
 <template>
   <q-page padding>
-    <div class="q-pa-md row items-start q-gutter-md">
-      <q-card
-        class="text-white"
-        :style="cardStyle"
-      >
-        <q-card-section>
-          <div class="text-h6">
-            Timesheet
-          </div>
-          <div class="text-subtitle2">
-            Self-hosted web application for weekly reporting
-          </div>
-        </q-card-section>
-        <q-card-section>
-          Report your consulting hours on projects with further segmentation via rates.<br>
-          You can download all data in csv format, modify as required and import modified data.<br>
-          Timesheet provides API to automate data exports.
-        </q-card-section>
-      </q-card>
-    </div>
     <div class="text-h6">
       Top 10 projects in {{ month }} {{ year }}
       <q-btn flat icon="skip_previous" @click="previousMonth" />
@@ -105,6 +85,11 @@ export default {
             gridLines: {
               display: false
             }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
           }]
         },
         plugins: {
@@ -147,7 +132,7 @@ export default {
       })
       inputProjects.forEach(function (p) {
         const index = projectTotal.findIndex(obj => obj.project === p.project)
-        if (index > 0) {
+        if (index >= 0) {
           projectTotal[index].hours = projectTotal[index].hours + p.hours
         }
       })
